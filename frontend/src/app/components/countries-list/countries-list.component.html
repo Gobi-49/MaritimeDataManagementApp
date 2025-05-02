@@ -1,0 +1,16 @@
+<p>countries-list works!</p>
+<h2>Countries List</h2>
+<table border="1">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let country of countries">
+      <td>{{ country.id }}</td>
+      <td>{{ country.name }}</td>
+    </tr>
+  </tbody>
+</table>

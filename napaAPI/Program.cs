@@ -6,6 +6,15 @@ var builder = WebApplication.CreateBuilder(args);
 // Register the database context
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("NapaConnection")));
+builder.Services.AddCors(option =>
+{
+    option.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("http://localhost:4200") 
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 // Add controller support
 builder.Services.AddControllers();
@@ -26,6 +35,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseCors(); // Enable CORS
 
 app.MapControllers();
 

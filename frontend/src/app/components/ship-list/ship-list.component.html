@@ -1,0 +1,18 @@
+<p>ship-list works!</p>
+<h2>Ship List</h2>
+<table border="1">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Max Speed (knots)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let ship of ships">
+      <td>{{ ship.id }}</td>
+      <td>{{ ship.name }}</td>
+      <td>{{ ship.maxSpeed }}</td>
+    </tr>
+  </tbody>
+</table>
