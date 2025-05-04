@@ -1,18 +1,56 @@
-<p>ship-list works!</p>
 <h2>Ship List</h2>
 <table border="1">
   <thead>
     <tr>
       <th>ID</th>
       <th>Name</th>
-      <th>Max Speed (knots)</th>
+      <th>Max Speed</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let ship of ships">
-      <td>{{ ship.id }}</td>
-      <td>{{ ship.name }}</td>
-      <td>{{ ship.maxSpeed }}</td>
+    <tr *ngFor="let ship of ships; let i = index">
+      <td>{{ i + 1 }}</td>
+
+      <!--  Ship Name-->
+      <td *ngIf="editingShipId !== ship.id">{{ ship.name }}</td>
+      <td *ngIf="editingShipId === ship.id">
+        <input type="text" [(ngModel)]="editingShip!.name"/>
+      
+      <!-- Ship Speed -->
+      <td *ngIf="editingShipId !== ship.id">{{ ship.maxSpeed }}</td>
+      <td *ngIf="editingShipId === ship.id">
+        <input type="number" [(ngModel)]="editingShip!.maxSpeed"/>
+      
+      <!-- Actions -->
+      <td>
+        <ng-container *ngIf="editingShipId !== ship.id">
+          <button (click)="startEditShip(ship)">Edit</button>
+          <button (click)="removeShip(ship)">Remove</button>
+        </ng-container>
+        <ng-container *ngIf="editingShipId === ship.id">
+          <button (click)="submitEditShip()">Save</button>
+          <button (click)="cancelEditShip()">Cancel</button>
+        </ng-container>
+      </td>
+    </tr>
+    <tr *ngIf="ships.length === 0">
+      <td colspan="4">No ships in database</td>
     </tr>
   </tbody>
 </table>
+
+<!-- Add Ship Form -->
+<button (click)="showAddForm = !showAddForm">
+  {{ showAddForm ? 'Cancel' : 'Add Ship' }}
+</button>
+
+<div *ngIf="showAddForm" style="margin-top: 10px;">
+  <label>Ship Name:
+    <input type="text" [(ngModel)]="newShip.name"/>
+  </label>
+  <label>Max Speed:
+    <input type="number" [(ngModel)]="newShip.maxSpeed"/>
+  </label>
+  <button (click)="submitNewShip()">Save</button>
+</div>

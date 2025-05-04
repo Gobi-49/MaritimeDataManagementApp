@@ -3,18 +3,11 @@ namespace napaAPI.Models
     public class Voyage
     {
         public int Id { get; set; }
-        public DateTime VoyageDate { get; set; }
-
-        public int DeparturePortId { get; set; }
-        public Port DeparturePort { get; set; }
-
-        public int ArrivalPortId { get; set; }
-        public Port ArrivalPort { get; set; }
-
-        public string Start { get; set; }
-        public string End { get; set; }
-
-        public int ShipId { get; set; }
-        public Ship Ship { get; set; }
+        public DateTime Date { get; set; }
+        public required int DeparturePortId { get; set; }
+        public required int ArrivalPortId { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
+        public required int ShipId { get; set; }
     }
 }

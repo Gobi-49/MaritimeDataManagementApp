@@ -1,0 +1,75 @@
+<h2>Countries Visited Last Year</h2>
+<table border="1">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Country</th>
+      <th>Ship</th>
+      <th>Date</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let countryvisited of countriesVisited; let i = index">
+      <td>{{ i + 1 }}</td>
+
+      <!-- Country -->
+      <td *ngIf="editingCountryVisitedId !== countryvisited.id">{{ getCountryName(countryvisited.countryId) }}</td>
+      <td *ngIf="editingCountryVisitedId === countryvisited.id">
+        <select [(ngModel)]="editingCountryVisited!.countryId">
+          <option *ngFor="let country of countries" [value]="country.id">{{ country.name }}</option>
+        </select>
+      </td>
+
+      <!-- Ship -->
+      <td *ngIf="editingCountryVisitedId !== countryvisited.id">{{ getShipName(countryvisited.shipId) }}</td>
+      <td *ngIf="editingCountryVisitedId === countryvisited.id">
+        <select [(ngModel)]="editingCountryVisited!.shipId">
+          <option *ngFor="let ship of ships" [value]="ship.id">{{ ship.name }}</option>
+        </select>
+      </td>
+
+      <!-- Date -->
+
+      <td *ngIf="editingCountryVisitedId !== countryvisited.id">{{ countryvisited.dateVisited | date: 'dd-MM-yyyy HH:mm' }}</td>
+      <td *ngIf="editingCountryVisitedId === countryvisited.id">
+        <input type="datetime-local" [(ngModel)]="editingCountryVisited!.dateVisited">
+      </td>
+
+      <!-- Actions -->
+      <td *ngIf="editingCountryVisitedId !== countryvisited.id">
+        <button (click)="editCountryVisited(countryvisited)">Edit</button>
+        <button (click)="removeCountryVisited(countryvisited)">Remove</button>
+      </td>
+      <td *ngIf="editingCountryVisitedId === countryvisited.id">
+        <button (click)="saveEditCountryVisited()">Save</button>
+        <button (click)="cancelEditCountryVisited()">Cancel</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Add Country Visited Form -->
+ <button (click)="showAddForm = !showAddForm">
+  {{ showAddForm ? 'Cancel' : 'Add Country Visited' }}
+</button>
+
+<div *ngIf="showAddForm" style="margin-top: 10px;">
+  <label>Country Visited
+    <select [(ngModel)]="newCountryVisited.countryId">
+      <option *ngFor="let country of countries" [value]="country.id">{{ country.name }}</option>
+    </select>
+  </label>
+
+  <label>Ship
+    <select [(ngModel)]="newCountryVisited.shipId">
+      <option *ngFor="let ship of ships" [value]="ship.id">{{ ship.name }}</option>
+    </select>
+  </label>
+
+  <label>Date Visited
+    <input type="datetime-local" [(ngModel)]="newCountryVisited.dateVisited">
+  </label>
+
+  <button (click)="submitNewCountryVisited()">Save</button>
+</div>

@@ -1,16 +1,43 @@
-<p>countries-list works!</p>
 <h2>Countries List</h2>
 <table border="1">
   <thead>
     <tr>
-      <th>ID</th>
+      <th></th>
       <th>Name</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let country of countries">
-      <td>{{ country.id }}</td>
-      <td>{{ country.name }}</td>
+    <tr *ngFor="let country of countries; let i = index">
+      <td>{{ i + 1 }}</td>
+      <!-- Country Name -->
+      <td *ngIf="editingCountryId !== country.id">{{ country.name }}</td>
+      <td *ngIf="editingCountryId === country.id">
+        <input type="text" [(ngModel)]="editingCountry!.name">
+      </td>
+
+      <!-- Actions -->
+      <td>
+        <ng-container *ngIf="editingCountryId !== country.id">
+          <button (click)="startEditCountry(country)">Edit</button>
+          <button (click)="removeCountry(country)">Remove</button>
+        </ng-container>
+        <ng-container *ngIf="editingCountryId === country.id">
+          <button (click)="submitEditCountry()">Save</button>
+          <button (click)="cancelEditCountry()">Cancel</button>
+        </ng-container>
+      </td>
     </tr>
   </tbody>
 </table>
+
+<!-- Add Country Form -->
+<button (click)="showAddForm = !showAddForm">
+  {{ showAddForm ? 'Cancel' : 'Add Country' }}
+</button>
+
+<div *ngIf="showAddForm" style="margin-top: 10px;">
+  <label>Country Name:
+    <input type="text" [(ngModel)]="newCountry.name">
+  </label>
+  <button (click)="submitNewCountry()">Save</button>

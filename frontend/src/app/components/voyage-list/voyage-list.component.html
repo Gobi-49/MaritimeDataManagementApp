@@ -1,0 +1,110 @@
+<h2>Voyages Table</h2>
+<table border="1">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Date</th>
+      <th>Departure Port</th>
+      <th>Arrival Port</th>
+      <th>Start</th>
+      <th>End</th>
+      <th>Ship</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let voyage of voyages">
+      <td>{{ voyage.id }}</td>
+
+      <!-- Date -->
+      <td *ngIf="editingVoyageId !== voyage.id">{{ voyage.date | date: 'dd-MM-yyyy' }}</td>
+      <td *ngIf="editingVoyageId === voyage.id">
+        <input type="date" [(ngModel)]="editingVoyage!.date">
+      </td>
+
+      <!-- Departure Port -->
+      <td *ngIf="editingVoyageId !== voyage.id">{{ getPortName(voyage.departurePortId) }}</td>
+      <td *ngIf="editingVoyageId === voyage.id">
+        <select [(ngModel)]="editingVoyage!.departurePortId">
+          <option *ngFor="let port of ports" [value]="port.id">{{ port.name }}</option>
+        </select>
+      </td>
+
+      <!-- Arrival Port -->
+      <td *ngIf="editingVoyageId !== voyage.id">{{ getPortName(voyage.arrivalPortId) }}</td>
+      <td *ngIf="editingVoyageId === voyage.id">
+        <select [(ngModel)]="editingVoyage!.arrivalPortId">
+          <option *ngFor="let port of ports" [value]="port.id">{{ port.name }}</option>
+        </select>
+      </td>
+
+      <!-- Start -->
+      <td *ngIf="editingVoyageId !== voyage.id">{{ voyage.start | date: 'dd-MM-yyyy HH:mm' }}</td>
+      <td *ngIf="editingVoyageId === voyage.id">
+        <input type="datetime-local" [(ngModel)]="editingVoyage!.start">
+      </td>
+
+      <!-- End -->
+      <td *ngIf="editingVoyageId !== voyage.id">{{ voyage.end | date: 'dd-MM-yyyy HH:mm' }}</td>
+      <td *ngIf="editingVoyageId === voyage.id">
+        <input type="datetime-local" [(ngModel)]="editingVoyage!.end">
+      </td>
+
+      <!-- Ship -->
+      <td *ngIf="editingVoyageId !== voyage.id">{{ getShipName(voyage.shipId) }}</td>
+      <td *ngIf="editingVoyageId === voyage.id">
+        <select [(ngModel)]="editingVoyage!.shipId">
+          <option *ngFor="let ship of ships" [value]="ship.id">{{ ship.name }}</option>
+        </select>
+      </td>
+
+      <!-- Actions -->
+      <td>
+        <ng-container *ngIf="editingVoyageId === voyage.id; else actionButtons">
+          <button (click)="saveEditVoyage()">Save</button>
+          <button (click)="cancelEditVoyage()">Cancel</button>
+        </ng-container>
+        <ng-template #actionButtons>
+          <button (click)="startEditVoyage(voyage)">Edit</button>
+          <button (click)="removeVoyage(voyage)">Remove</button>
+        </ng-template>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ADD NEW VOYAGE -->
+<button (click)="showAddForm = !showAddForm">
+  {{ showAddForm ? 'Cancel' : 'Add Voyage' }}
+</button>
+
+<div *ngIf="showAddForm" style="margin-top: 10px;">
+
+  <label>Departure Port:
+    <select [(ngModel)]="newVoyage.departurePortId">
+      <option *ngFor="let port of ports" [value]="port.id">{{ port.name }}</option>
+    </select>
+  </label>
+
+  <label>Arrival Port:
+    <select [(ngModel)]="newVoyage.arrivalPortId">
+      <option *ngFor="let port of ports" [value]="port.id">{{ port.name }}</option>
+    </select>
+  </label>
+
+  <label>Start:
+    <input type="datetime-local" [(ngModel)]="newVoyage.start">
+  </label>
+
+  <label>End:
+    <input type="datetime-local" [(ngModel)]="newVoyage.end">
+  </label>
+
+  <label>Ship:
+    <select [(ngModel)]="newVoyage.shipId">
+      <option *ngFor="let ship of ships" [value]="ship.id">{{ ship.name }}</option>
+    </select>
+  </label>
+
+  <button (click)="submitNewVoyage()">Save</button>
+</div>

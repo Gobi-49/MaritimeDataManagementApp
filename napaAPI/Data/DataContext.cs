@@ -13,25 +13,43 @@ namespace napaAPI.Data
         public DbSet<Port> Ports { get; set; }
         public DbSet<Voyage> Voyages { get; set; }
         public DbSet<Country> Countries { get; set; }
+        public DbSet<CountryVisited> CountriesVisited { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Voyage>()
-                .HasOne(v => v.DeparturePort)
+                .HasOne<Port>()
                 .WithMany()
                 .HasForeignKey(v => v.DeparturePortId)
                 .OnDelete(DeleteBehavior.Restrict); // prevents cascade conflict
 
             modelBuilder.Entity<Voyage>()
-                .HasOne(v => v.ArrivalPort)
+                .HasOne<Port>()
                 .WithMany()
                 .HasForeignKey(v => v.ArrivalPortId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Voyage>()
-                .HasOne(v => v.Ship)
+                .HasOne<Ship>()
                 .WithMany()
-                .HasForeignKey(v => v.ShipId);
-                }
-    }  
+                .HasForeignKey(v => v.ShipId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Port>()
+                .HasOne<Country>()
+                .WithMany()
+                .HasForeignKey(p => p.CountryId)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<CountryVisited>()
+                .HasOne<Country>()
+                .WithMany()
+                .HasForeignKey(cv => cv.CountryId)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<CountryVisited>()
+                .HasOne<Ship>()
+                .WithMany()
+                .HasForeignKey(cv => cv.ShipId)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
+    }
 }

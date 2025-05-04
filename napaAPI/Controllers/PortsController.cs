@@ -60,4 +60,28 @@ public class PortsController : ControllerBase
 
         return NoContent();
     }
+
+    // PUT: api/ports/{id}
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutPort(int id, Port port)
+    {
+        if (id != port.Id)
+        {
+            return BadRequest();
+        }
+
+        var existingPort = await _context.Ports.FindAsync(id);
+
+        if (existingPort == null)
+        {
+            return NotFound();
+        }
+
+        existingPort.Name = port.Name;
+        existingPort.CountryId = port.CountryId;
+
+        await _context.SaveChangesAsync();
+
+        return Ok(existingPort);
+    }
 }

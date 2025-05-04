@@ -60,4 +60,26 @@ public class CountriesController : ControllerBase
 
         return NoContent();
     }
+
+    // PUT: api/countries/{id}
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutCountry(int id, Country country)
+    {
+        if (id != country.Id)
+        {
+            return BadRequest();
+        }
+
+        var existingCountry = await _context.Countries.FindAsync(id);
+
+        if (existingCountry == null)
+        {
+            return NotFound();
+        }
+
+        existingCountry.Name = country.Name;
+
+        await _context.SaveChangesAsync();
+        return Ok(existingCountry);
+    }
 }

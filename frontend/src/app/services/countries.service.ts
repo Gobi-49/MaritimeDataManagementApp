@@ -18,4 +18,20 @@ export class CountriesService {
   getCountries(): Observable<Country[]> {
     return this.http.get<Country[]>(this.apiUrl);
   }
+
+  getCountry(id: number): Observable<Country> {
+    return this.http.get<Country>(`${this.apiUrl}/${id}`);
+  }
+
+  addCountry(country: Country): Observable<Country> {
+    return this.http.post<Country>(this.apiUrl, country);
+  }
+
+  updateCountry(country: Country): Observable<Country> {
+    return this.http.put<Country>(`${this.apiUrl}/${country.id}`, country);
+  }
+
+  removeCountry(county: Country): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${county.id}`);
+  }
 }

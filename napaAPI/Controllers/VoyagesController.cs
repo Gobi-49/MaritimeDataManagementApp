@@ -60,4 +60,31 @@ public class VoyagesController : ControllerBase
 
         return NoContent();
     }
+
+    // PUT: api/voyages/{id}
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutVoyage(int id, Voyage voyage)
+    {
+    if (id != voyage.Id)
+    {
+        return BadRequest();
+    }
+
+    var existing = await _context.Voyages.FindAsync(id);
+    if (existing == null)
+    {
+        return NotFound();
+    }
+
+    existing.Date = voyage.Date;
+    existing.DeparturePortId = voyage.DeparturePortId;
+    existing.ArrivalPortId = voyage.ArrivalPortId;
+    existing.Start = voyage.Start;
+    existing.End = voyage.End;
+    existing.ShipId = voyage.ShipId;
+
+    await _context.SaveChangesAsync();
+
+    return Ok(existing);
+    }
 }

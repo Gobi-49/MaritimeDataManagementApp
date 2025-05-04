@@ -60,4 +60,27 @@ public class ShipsController : ControllerBase
 
         return NoContent();
     }
+
+    // PUT: api/ships/{id}
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutShip(int id, Ship ship)
+    {
+        if (id != ship.Id)
+        {
+            return BadRequest();
+        }
+
+        var existingShip = await _context.Ships.FindAsync(id);
+
+        if (existingShip == null)
+        {
+            return NotFound();
+        }
+
+        existingShip.Name = ship.Name;
+        existingShip.MaxSpeed = ship.MaxSpeed;
+
+        await _context.SaveChangesAsync();
+        return Ok(existingShip);
+    }
 }

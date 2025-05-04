@@ -1,0 +1,62 @@
+<h2>Port Table</h2>
+<table border="1">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Country</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let port of ports; let i = index">
+      <td>{{ i + 1 }}</td>
+
+      <!-- Port Name -->
+      <td *ngIf="editingPortId !== port.id">{{ port.name }}</td>
+      <td *ngIf="editingPortId === port.id">
+        <input type="text" [(ngModel)]="editingPort!.name">
+      </td>
+
+      <!-- Port Country -->
+      <td *ngIf="editingPortId !== port.id">{{ getCountryName(port.countryId) }}</td>
+      <td *ngIf="editingPortId === port.id">
+        <select [(ngModel)]="editingPort!.countryId">
+          <option *ngFor="let country of countries" [value]="country.id">{{ country.name }}</option>
+        </select>
+      </td>
+
+      <!-- Actions -->
+      <td>
+        <ng-container *ngIf="editingPortId !== port.id">
+          <button (click)="startEditPort(port)">Edit</button>
+          <button (click)="removePort(port)">Remove</button>
+        </ng-container>
+        <ng-container *ngIf="editingPortId === port.id">
+          <button (click)="saveEditPort()">Save</button>
+          <button (click)="cancelEditPort()">Cancel</button>
+        </ng-container>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Add new port -->
+
+<button (click)="showAddForm = !showAddForm">
+  {{ showAddForm ? 'Cancel' : 'Add Port' }}
+</button>
+
+<div *ngIf="showAddForm">
+  <label>Name
+    <input type="text" [(ngModel)]="newPort.name">
+  </label>
+
+  <label>Country
+    <select [(ngModel)]="newPort.countryId">
+      <option *ngFor="let country of countries" [value]="country.id">{{ country.name }}</option>
+    </select>
+  </label>
+  
+  <button (click)="submitNewPort()">Save</button>
+</div>
