@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/napaAPI/napaAPI.csproj",
+                "${workspaceFolder}/backend/backend.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary;ForceNoAlign"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/napaAPI/napaAPI.csproj",
+                "${workspaceFolder}/backend/backend.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary;ForceNoAlign"
             ],
@@ -33,7 +33,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/napaAPI/napaAPI.csproj"
+                "${workspaceFolder}/backend/backend.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
