@@ -42,6 +42,11 @@ export class VisitChartComponent implements OnInit {
     this.countryVisitedService.refreshNeeded$.subscribe(() => {
       this.updateChartData();
     });
+
+    this.countriesService._refreshNeeded$.subscribe(() => {
+      this.updateChartData();
+    });
+    
     this.updateChartData();
   }
 

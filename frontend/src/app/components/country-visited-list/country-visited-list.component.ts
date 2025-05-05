@@ -47,6 +47,30 @@ export class CountryVisitedListComponent {
       next: (data) => (this.ships = data),
       error: (err) => console.error('Error fetching ships:', err)
     });
+
+    this.countriesService._refreshNeeded$.subscribe(() => {
+      this.countriesService.getCountries().subscribe({
+        next: (data) => (this.countries = data),
+        error: (err) => console.error('Error fetching countries:', err)
+      });
+
+      this.countryVisitedService.getCountriesVisited().subscribe({
+        next: (data) => (this.countriesVisited = data),
+        error: (err) => console.error('Error fetching countries visited:', err)
+      });
+    });    
+
+    this.shipService.refreshNeeded$.subscribe(() => {
+      this.shipService.getShips().subscribe({
+        next: (data) => (this.ships = data),
+        error: (err) => console.error('Error fetching ships:', err)
+      });
+
+      this.countryVisitedService.getCountriesVisited().subscribe({
+        next: (data) => (this.countriesVisited = data),
+        error: (err) => console.error('Error fetching countries visited:', err)
+      });
+    });    
   }
 
   removeCountryVisited(countryVisited: CountryVisited): void {
