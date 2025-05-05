@@ -1,5 +1,6 @@
 using napaAPI.Data;
 using Microsoft.EntityFrameworkCore;
+using napaAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,8 @@ builder.Services.AddCors(option =>
               .AllowAnyMethod();
     });
 });
+
+builder.Services.AddHostedService<DailyVisitsCleanupService>(); // Register the background service
 
 // Add controller support
 builder.Services.AddControllers();

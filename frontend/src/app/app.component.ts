@@ -4,6 +4,7 @@ import { CountriesListComponent } from './components/countries-list/countries-li
 import { PortsListComponent } from './components/ports-list/ports-list.component';
 import { CountryVisitedListComponent } from './components/country-visited-list/country-visited-list.component';
 import { VoyageListComponent } from './components/voyage-list/voyage-list.component';
+import { VisitChartComponent } from './components/visit-chart/visit-chart.component';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,8 @@ import { VoyageListComponent } from './components/voyage-list/voyage-list.compon
     CountriesListComponent, 
     PortsListComponent,
     CountryVisitedListComponent,
-    VoyageListComponent
+    VoyageListComponent,
+    VisitChartComponent
   ],
   standalone: true,
   templateUrl: './app.component.html',

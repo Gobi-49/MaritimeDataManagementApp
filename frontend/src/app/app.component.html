@@ -1,5 +1,26 @@
-<app-ship-list></app-ship-list>
-<app-countries-list></app-countries-list>
-<app-ports-list></app-ports-list>
-<app-country-visited-list></app-country-visited-list>
-<app-voyage-list></app-voyage-list>
+<div class="top-tables">
+    <div class="table-container">
+        <app-ship-list></app-ship-list>
+    </div>
+
+    <div class="table-container">
+        <app-countries-list></app-countries-list>
+    </div>
+
+    <div class="table-container">
+        <app-ports-list></app-ports-list>
+    </div>
+</div>
+  
+<!-- Second row: Country visited / Voyages -->
+<div class="middle-tables">
+    <div class="table-container">
+      <app-country-visited-list></app-country-visited-list>
+      <!-- Chart under country-visited only -->
+      <app-visit-chart></app-visit-chart>
+    </div>
+    <div class="table-container">
+      <app-voyage-list></app-voyage-list>
+    </div>
+</div>
+  

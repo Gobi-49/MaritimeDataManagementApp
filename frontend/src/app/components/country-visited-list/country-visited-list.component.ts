@@ -90,9 +90,14 @@ export class CountryVisitedListComponent {
   }
 
   submitNewCountryVisited(): void {
-    if (this.newCountryVisited.countryId && this.newCountryVisited.shipId) {
-      this.addCountryVisited(this.newCountryVisited as CountryVisited);
-      this.cancelAddCountryVisited();
+    if (this.newCountryVisited.countryId && this.newCountryVisited.shipId && this.newCountryVisited.dateVisited) {
+      if (!this.isDateValid(this.newCountryVisited.dateVisited as Date)) {
+        alert('Date must be within the last year.');
+        return;
+      } else {
+        this.addCountryVisited(this.newCountryVisited as CountryVisited);
+        this.cancelAddCountryVisited();
+      }
     }
   }
 
@@ -118,8 +123,24 @@ export class CountryVisitedListComponent {
 
   saveEditCountryVisited(): void {
     if (this.editingCountryVisited) {
-      this.updateCountryVisited(this.editingCountryVisited);
-      this.cancelEditCountryVisited();
+      if (!this.isDateValid(this.editingCountryVisited.dateVisited)) {
+        alert('Date must be within the last year.');
+      } else {
+        this.updateCountryVisited(this.editingCountryVisited);
+        this.cancelEditCountryVisited();
+      }
     }
   }
+
+  isDateValid(inputDate: Date): boolean {
+    const cutoff = new Date();
+    const currentDate = new Date(inputDate);
+
+    currentDate.setHours(0, 0, 0, 0); // Normalize time to midnight
+    cutoff.setHours(0, 0, 0, 0); // Normalize time to midnight
+    cutoff.setFullYear(cutoff.getFullYear() - 1); // 1 year ago
+
+    return currentDate >= cutoff;
+  }
+
 }

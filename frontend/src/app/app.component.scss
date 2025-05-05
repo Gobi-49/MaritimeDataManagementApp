@@ -1,0 +1,15 @@
+.top-tables,
+.middle-tables {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 10px; // smaller space between columns
+  row-gap: 60px;    // larger space between rows
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+
+.table-container {
+  flex: 1;
+  min-width: 350px;
+}
